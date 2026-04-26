@@ -1,0 +1,996 @@
+--- index.html (原始)
+
+
++++ index.html (修改后)
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Кейс о создании учебных конспектов для курсов Linux.Professional и PostgreSQL в онлайн-школе OTUS: от транскрибации и промт-инженерии до финального шаблона и передачи контента заказчику.">
+    <title>Как превратить 40 видеолекций в готовую библиотеку конспектов с помощью ИИ | Кейс педагогического дизайнера</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========================================
+           CSS VARIABLES & RESET
+           ======================================== */
+        :root {
+            /* Typography */
+            --font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+            /* Type Scale */
+            --h1-desktop: 56px;
+            --h1-mobile: 38px;
+            --h2-desktop: 32px;
+            --h2-mobile: 24px;
+            --h3-desktop: 22px;
+            --h3-mobile: 18px;
+            --body-large: 20px;
+            --body: 17px;
+            --small: 14px;
+            --meta: 12px;
+
+            /* Line Heights */
+            --lh-heading-1: 1.05;
+            --lh-heading-2: 1.15;
+            --lh-heading-3: 1.25;
+            --lh-body-large: 1.6;
+            --lh-body: 1.7;
+            --lh-small: 1.5;
+
+            /* Colors */
+            --bg: #F7F6F2;
+            --surface: #FFFFFF;
+            --surface-subtle: #F1EFE8;
+            --text-primary: #171717;
+            --text-secondary: #5F5F5F;
+            --text-muted: #8A8A8A;
+            --border: #E7E2D8;
+            --divider: #EDE8DE;
+            --accent-primary: #1F6B5C;
+            --accent-hover: #185447;
+            --accent-soft-bg: #E5F1EE;
+            --tag-bg: #F0EEE8;
+            --tag-text: #3C3C3C;
+
+            /* Buttons */
+            --btn-primary-bg: #171717;
+            --btn-primary-text: #FFFFFF;
+            --btn-primary-hover: #2A2A2A;
+            --btn-secondary-bg: transparent;
+            --btn-secondary-border: #D8D2C7;
+            --btn-secondary-text: #171717;
+            --btn-secondary-hover-bg: #F1EFE8;
+
+            /* Cards */
+            --card-bg: #FFFFFF;
+            --card-border: #E7E2D8;
+            --card-radius: 18px;
+            --card-shadow: 0 8px 24px rgba(23, 23, 23, 0.04);
+
+            /* Layout */
+            --max-width: 1120px;
+            --narrow-width: 720px;
+            --section-spacing-desktop: 120px;
+            --section-spacing-mobile: 72px;
+            --grid-gap: 24px;
+            --radius-large: 24px;
+            --radius-medium: 18px;
+            --radius-small: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: var(--lh-body);
+            font-size: var(--body);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ========================================
+           TYPOGRAPHY
+           ======================================== */
+        h1, h2, h3 {
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: var(--lh-heading-2);
+        }
+
+        h1 {
+            font-size: var(--h1-mobile);
+            font-weight: 700;
+            line-height: var(--lh-heading-1);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: var(--h2-mobile);
+            margin-bottom: 24px;
+        }
+
+        h3 {
+            font-size: var(--h3-mobile);
+            line-height: var(--lh-heading-3);
+            margin-bottom: 16px;
+        }
+
+        p {
+            margin-bottom: 24px;
+            max-width: var(--narrow-width);
+        }
+
+        .text-large {
+            font-size: var(--body-large);
+            line-height: var(--lh-body-large);
+        }
+
+        .text-small {
+            font-size: var(--small);
+            line-height: var(--lh-small);
+        }
+
+        .text-meta {
+            font-size: var(--meta);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .text-secondary {
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           LAYOUT UTILITIES
+           ======================================== */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .container-narrow {
+            max-width: var(--narrow-width);
+            margin: 0 auto;
+        }
+
+        section {
+            padding: var(--section-spacing-mobile) 0;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: var(--h1-desktop);
+            }
+
+            h2 {
+                font-size: var(--h2-desktop);
+            }
+
+            h3 {
+                font-size: var(--h3-desktop);
+            }
+
+            section {
+                padding: var(--section-spacing-desktop) 0;
+            }
+        }
+
+        /* ========================================
+           COMPONENTS
+           ======================================== */
+        /* Back Link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: var(--small);
+            font-weight: 500;
+            padding: 12px 0;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            font-size: var(--body);
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: var(--radius-small);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--btn-primary-bg);
+            color: var(--btn-primary-text);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--btn-primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--btn-secondary-bg);
+            color: var(--btn-secondary-text);
+            border: 1px solid var(--btn-secondary-border);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--btn-secondary-hover-bg);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .btn-group {
+                flex-direction: row;
+                gap: 24px;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(23, 23, 23, 0.06);
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 6px 12px;
+            border-radius: var(--radius-small);
+            font-size: var(--small);
+            font-weight: 500;
+        }
+
+        /* Facts Grid */
+        .facts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .facts-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+        }
+
+        .fact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 20px;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-medium);
+        }
+
+        .fact-label {
+            font-size: var(--meta);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .fact-value {
+            font-size: var(--body);
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background-color: var(--accent-soft-bg);
+            border-left: 4px solid var(--accent-primary);
+            padding: 40px;
+            border-radius: var(--radius-medium);
+            margin: 48px 0;
+        }
+
+        .quote-text {
+            font-size: var(--body-large);
+            line-height: var(--lh-body-large);
+            font-style: italic;
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        /* Solutions Grid */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .solutions-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .solution-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .solution-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--accent-soft-bg);
+            border-radius: var(--radius-small);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--accent-primary);
+        }
+
+        .solution-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Lists */
+        .checklist {
+            list-style: none;
+            margin: 24px 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-left: 8px;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            color: var(--accent-primary);
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background-color: var(--divider);
+            margin: 48px 0;
+            border: none;
+        }
+
+        /* ========================================
+           STICKY NAVIGATION
+           ======================================== */
+        .sticky-nav {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .sticky-nav {
+                display: block;
+            }
+        }
+
+        .nav-list {
+            list-style: none;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-medium);
+            padding: 16px 20px;
+            box-shadow: var(--card-shadow);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            margin-bottom: 12px;
+        }
+
+        .nav-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .nav-link {
+            font-size: var(--small);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: block;
+            padding: 4px 0;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        /* Mobile Nav Scroll */
+        .mobile-nav {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 16px 0;
+            margin-bottom: 24px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-nav-link {
+            flex-shrink: 0;
+            font-size: var(--small);
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-small);
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-nav-link:hover,
+        .mobile-nav-link.active {
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+            background-color: var(--accent-soft-bg);
+        }
+
+        @media (min-width: 1024px) {
+            .mobile-nav {
+                display: none;
+            }
+        }
+
+        /* ========================================
+           SECTIONS
+           ======================================== */
+        /* Hero Section */
+        .hero {
+            padding-top: 80px;
+            padding-bottom: var(--section-spacing-mobile);
+        }
+
+        @media (min-width: 768px) {
+            .hero {
+                padding-bottom: var(--section-spacing-desktop);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: var(--body-large);
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 900px;
+        }
+
+        /* Content Sections */
+        .section-header {
+            margin-bottom: 40px;
+        }
+
+        .highlight-box {
+            background-color: var(--surface-subtle);
+            border-radius: var(--radius-medium);
+            padding: 32px;
+            margin: 32px 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background-color: var(--surface);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========================================
+           ANIMATIONS
+           ======================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        footer {
+            padding: 48px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-text {
+            font-size: var(--small);
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Navigation (Desktop) -->
+    <nav class="sticky-nav">
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#about" class="nav-link">О проекте</a></li>
+            <li class="nav-item"><a href="#task" class="nav-link">Задача</a></li>
+            <li class="nav-item"><a href="#analysis" class="nav-link">Анализ</a></li>
+            <li class="nav-item"><a href="#solution" class="nav-link">Решение</a></li>
+            <li class="nav-item"><a href="#role" class="nav-link">Моя роль</a></li>
+            <li class="nav-item"><a href="#decisions" class="nav-link">Решения</a></li>
+            <li class="nav-item"><a href="#results" class="nav-link">Результаты</a></li>
+            <li class="nav-item"><a href="#challenges" class="nav-link">Сложности</a></li>
+            <li class="nav-item"><a href="#learnings" class="nav-link">Выводы</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero reveal">
+            <a href="#" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Вернуться к проектам
+            </a>
+
+            <h1 style="margin-top: 24px;">Как превратить 40 видеолекций в готовую библиотеку конспектов с помощью ИИ</h1>
+
+            <p class="hero-subtitle text-large">
+                Кейс о создании учебных конспектов для курсов Linux.Professional и PostgreSQL в онлайн-школе OTUS: от транскрибации и промт-инженерии до финального шаблона и передачи контента заказчику.
+            </p>
+
+            <!-- Facts Grid -->
+            <div class="facts-grid">
+                <div class="fact-item">
+                    <span class="fact-label">Заказчик</span>
+                    <span class="fact-value">OTUS — онлайн-школа для IT-специалистов</span>
+                </div>
+                <div class="fact-item">
+                    <span class="fact-label">Формат</span>
+                    <span class="fact-value">Методические конспекты занятий</span>
+                </div>
+                <div class="fact-item">
+                    <span class="fact-label">Курсы</span>
+                    <span class="fact-value">Linux.Professional и PostgreSQL</span>
+                </div>
+                <div class="fact-item">
+                    <span class="fact-label">Роль</span>
+                    <span class="fact-value">Педагогический дизайнер</span>
+                </div>
+                <div class="fact-item">
+                    <span class="fact-label">Срок</span>
+                    <span class="fact-value">Октябрь — декабрь 2025 (9 недель)</span>
+                </div>
+                <div class="fact-item">
+                    <span class="fact-label">Результат</span>
+                    <span class="fact-value">40+ конспектов, готовых к внедрению</span>
+                </div>
+                <div class="fact-item">
+                    <span class="fact-label">Оценка заказчика</span>
+                    <span class="fact-value" style="color: var(--accent-primary);">10 из 10</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Project -->
+        <section id="about" class="reveal">
+            <!-- Mobile Navigation -->
+            <div class="mobile-nav">
+                <a href="#about" class="mobile-nav-link active">О проекте</a>
+                <a href="#task" class="mobile-nav-link">Задача</a>
+                <a href="#analysis" class="mobile-nav-link">Анализ</a>
+                <a href="#solution" class="mobile-nav-link">Решение</a>
+                <a href="#role" class="mobile-nav-link">Роль</a>
+                <a href="#decisions" class="mobile-nav-link">Решения</a>
+                <a href="#results" class="mobile-nav-link">Результаты</a>
+                <a href="#challenges" class="mobile-nav-link">Сложности</a>
+                <a href="#learnings" class="mobile-nav-link">Выводы</a>
+            </div>
+
+            <div class="section-header">
+                <span class="text-meta">О проекте</span>
+                <h2>От рутинной документации к методической проблеме</h2>
+            </div>
+
+            <div class="container-narrow">
+                <p class="text-large">
+                    Проект был посвящен созданию библиотеки учебных конспектов для двух технических курсов OTUS: Linux.Professional и PostgreSQL. Задача звучала, как будто речь идет о рутинной документации, но по факту за ней стояла методическая проблема: как из видеолекции, рассчитанной на живое восприятие, сделать структурированный и точный учебный текст, который будет работать как самостоятельный материал для студента.
+                </p>
+            </div>
+        </section>
+
+        <!-- Task -->
+        <section id="task" class="reveal">
+            <div class="section-header">
+                <span class="text-meta">Задача</span>
+                <h2>Библиотека из 40 готовых конспектов</h2>
+            </div>
+
+            <div class="container-narrow">
+                <p>
+                    Заказчику нужна была библиотека из 40 готовых к использованию конспектов, которые студенты могли бы использовать как вспомогательный материал при прохождении курсов. При этом конспекты должны были соответствовать единому утвержденному шаблону, быть методически грамотными, точно передавать содержание лекций и при этом быть лаконичными и читаемыми.
+                </p>
+
+                <p>
+                    Важно было не просто пересказать видео, а структурировать его содержание так, чтобы текст помогал, а не дублировал просмотр.
+                </p>
+            </div>
+        </section>
+
+        <!-- Analysis -->
+        <section id="analysis" class="reveal">
+            <div class="section-header">
+                <span class="text-meta">Анализ исходного контента</span>
+                <h2>Что показал анализ видеолекций</h2>
+            </div>
+
+            <div class="container-narrow">
+                <p>
+                    Видеолекции по Linux и PostgreSQL были техническими и насыщенными: разные преподаватели, разная плотность подачи, разная степень явности структуры. Стало понятно, что применять один и тот же промт ко всем лекциям без разбора не получится.
+                </p>
+
+                <div class="highlight-box">
+                    <ul class="checklist">
+                        <li>Часть материала требовала переработки логики подачи</li>
+                        <li>Часть — выделения ключевых команд и терминов</li>
+                        <li>Часть — восстановления структуры, которая в видео была размыта</li>
+                    </ul>
+                </div>
+
+                <p>
+                    Также выяснилось, что транскрипция сама по себе не является готовым исходником: расшифровки содержали устную речь со всеми ее особенностями и требовали предобработки перед передачей в ИИ.
+                </p>
+            </div>
+        </section>
+
+        <!-- Key Solution -->
+        <section id="solution" class="reveal">
+            <div class="section-header">
+                <span class="text-meta">Ключевое решение</span>
+                <h2>Многоэтапная схема работы</h2>
+            </div>
+
+            <div class="container-narrow">
+                <p class="text-large">
+                    Главным проектным решением стала многоэтапная схема работы: сначала получить транскрипт видео, затем подготовить его как исходник для ИИ, потом прогнать через несколько итераций генерации с разными промтами, выбрать наиболее точную версию и отформатировать под утвержденный шаблон.
+                </p>
+
+                <p>
+                    Это позволило масштабировать процесс без потери качества, а не жертвовать одним ради другого.
+                </p>
+
+                <div class="quote-block">
+                    <p class="quote-text">
+                        «Работа с ИИ в методическом контексте — это не автоматизация, а дизайн процесса»
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Role -->
+        <section id="role" class="reveal">
+            <div class="section-header">
+                <span class="text-meta">Моя роль</span>
+                <h2>Педагогический дизайнер</h2>
+            </div>
+
+            <div class="container-narrow">
+                <p>
+                    В проекте я работала как педагогический дизайнер. Мы с коллегой разделили объем: каждая вела свой пул лекций независимо, координировались на регулярных созвонах и сверяли подходы при необходимости.
+                </p>
+
+                <p>
+                    Я вела все этапы работы по своим лекциям полностью самостоятельно: от транскрибации до финальной передачи конспектов заказчику. По ходу проекта я также проявила инициативу и взяла на себя дополнительный объем — конспекты по курсу PostgreSQL.
+                </p>
+            </div>
+        </section>
+
+        <!-- Three Decisions -->
+        <section id="decisions" class="reveal">
+            <div class="section-header">
+                <span class="text-meta">Проектные решения</span>
+                <h2>Три ключевых подхода</h2>
+            </div>
+
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                    </div>
+                    <h3>Промт-инженерия как методический инструмент</h3>
+                    <p class="text-small text-secondary">
+                        Я не использовала один готовый запрос для всех лекций. Для каждого типа контента я формулировала промт с учетом структуры исходного материала: плотность информации, наличие практических примеров, особенности подачи конкретного преподавателя. Это позволило получать конспекты, которые действительно отражают суть занятия.
+                    </p>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 4 23 10 17 10"/>
+                            <polyline points="1 20 1 14 7 14"/>
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                        </svg>
+                    </div>
+                    <h3>Итеративное создание и отбор</h3>
+                    <p class="text-small text-secondary">
+                        Для каждой лекции я делала несколько версий конспекта и выбирала наиболее информативную и точную. Это требовало времени, но именно такой подход позволил достичь уровня, который заказчик оценил как соответствующий высшему критерию качества.
+                    </p>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                        </svg>
+                    </div>
+                    <h3>Работа с трудными транскриптами</h3>
+                    <p class="text-small text-secondary">
+                        Часть видеолекций была слишком длинной или содержала технические сложности для автоматической транскрипции. В таких случаях я самостоятельно находила обходные решения: разбивала видео на части, тестировала альтернативные сервисы и адаптировала исходник вручную.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What We Stepped Back From -->
+        <section id="stepback" class="reveal">
+            <div class="section-header">
+                <span class="text-meta">Корректировка подхода</span>
+                <h2>От чего пришлось отступить</h2>
+            </div>
+
+            <div class="container-narrow">
+                <p>
+                    Изначально предполагалось, что транскрипт будет готовым рабочим исходником. На практике оказалось, что прямая передача сырой расшифровки в ИИ дает слабый результат: структура размыта, устная речь мешает логике.
+                </p>
+
+                <p>
+                    Пришлось добавить в процесс этап предобработки транскриптов, что увеличило трудозатраты, но кардинально улучшило качество финального продукта.
+                </p>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section id="results" class="reveal">
+            <div class="section-header">
+                <span class="text-meta">Результаты</span>
+                <h2>Что получилось</h2>
+            </div>
+
+            <div class="container-narrow">
+                <p>По итогам проекта заказчик получил:</p>
+
+                <ul class="checklist">
+                    <li>Транскрипты видеолекций по курсам Linux.Professional и PostgreSQL</li>
+                    <li>40+ конспектов занятий, оформленных по единому шаблону и готовых к немедленному внедрению</li>
+                    <li>Проверенную многоэтапную схему работы, которую можно воспроизвести для других курсов</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p style="margin-bottom: 0;">
+                        Все задачи были выполнены в полном объеме в срок. Итоговая оценка руководителя проекта — <strong>10 из 10</strong> по всем критериям. В комментарии руководитель отдельно отметила инициативность, качество продукта и его полную готовность к использованию студентами.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenges -->
+        <section id="challenges" class="reveal">
+            <div class="section-header">
+                <span class="text-meta">Сложности</span>
+                <h2>Что было самым сложным</h2>
+            </div>
+
+            <div class="container-narrow">
+                <p>
+                    Самым сложным оказалась нестабильность технической инфраструктуры: сервис для транскрибации периодически не справлялся с видео без каких-либо объяснений.
+                </p>
+
+                <p>
+                    В таких ситуациях важно было не зависать в ожидании и не поднимать тревогу, а самостоятельно находить работающее решение в рамках имеющихся ресурсов. Это потребовало и технической гибкости, и определенной психологической устойчивости к неопределенности.
+                </p>
+            </div>
+        </section>
+
+        <!-- Learnings -->
+        <section id="learnings" class="reveal">
+            <div class="section-header">
+                <span class="text-meta">Выводы</span>
+                <h2>Чему меня научил проект</h2>
+            </div>
+
+            <div class="container-narrow">
+                <p>
+                    Этот проект дал мне понять, что работа с ИИ в методическом контексте — это не автоматизация, а дизайн процесса. Важно не просто знать, как запустить инструмент, а понимать, на каком шаге его применять, как подготовить входящий материал и как оценить качество выходящего.
+                </p>
+
+                <p>
+                    Я также получила первый опыт работы в корпоративной команде педагогических дизайнеров: поняла, как устроена дистанционная коммуникация с руководителем, и увидела изнутри, как работает методическая служба в онлайн-школе.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- CTA Section -->
+    <section class="cta-section reveal">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Готовы обсудить проект?</h2>
+                <p class="text-secondary">
+                    Если вам интересно узнать больше о моем опыте работы с педагогическим дизайном и ИИ-инструментами, давайте свяжемся.
+                </p>
+
+                <div class="btn-group">
+                    <a href="#" class="btn btn-secondary">Вернуться к проектам</a>
+                    <a href="#" class="btn btn-primary">Обсудить проект</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-text">
+                © 2025 Педагогический дизайнер. Все права защищены.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Reveal animation on scroll
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Active navigation highlighting
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Initialize
+        window.addEventListener('scroll', () => {
+            reveal();
+            updateActiveNav();
+        });
+
+        // Initial call
+        reveal();
+        updateActiveNav();
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
